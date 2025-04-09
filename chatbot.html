@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GlowGenie - AI Stylist</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .chat-container {
+      max-width: 600px;
+      margin: 40px auto;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .chat-log {
+      height: 300px;
+      overflow-y: auto;
+      margin-bottom: 10px;
+      border: 1px solid #eee;
+      padding: 10px;
+    }
+    .user, .bot {
+      margin: 5px 0;
+    }
+    .bot { color: #b23eff; }
+    input[type=\"text\"] {
+      width: 80%;
+      padding: 10px;
+    }
+    button {
+      padding: 10px 15px;
+      background: #b23eff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>GlowGenie</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="chatbot.html">AI Stylist</a></li>
+        <li><a href="lookbook.html">Lookbook</a></li>
+        <li><a href="store.html">Store</a></li>
+        <li><a href="customizer.html">Customizer</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="chat-container">
+    <div class="chat-log" id="chat-log">
+      <div class="bot">Hello! I'm your GlowGenie Stylist 🌟 Let's get you glowing!</div>
+    </div>
+    <input type="text" id="user-input" placeholder="Type your style or occasion..." />
+    <button onclick="sendMessage()">Send</button>
+  </main>
+
+  <script>
+    function sendMessage() {
+      const input = document.getElementById('user-input');
+      const log = document.getElementById('chat-log');
+
+      const userMsg = document.createElement('div');
+      userMsg.classList.add('user');
+      userMsg.innerText = 'You: ' + input.value;
+      log.appendChild(userMsg);
+
+      const botMsg = document.createElement('div');
+      botMsg.classList.add('bot');
+
+      // Very basic fake AI logic
+      if (input.value.toLowerCase().includes('party')) {
+        botMsg.innerText = 'Try a bold lip and shimmer eyeshadow! 💃';
+      } else if (input.value.toLowerCase().includes('natural')) {
+        botMsg.innerText = 'Go for nude tones and light mascara ✨';
+      } else {
+        botMsg.innerText = 'I recommend a fresh dewy base with soft pink tones 💖';
+      }
+
+      log.appendChild(botMsg);
+      input.value = '';
+      log.scrollTop = log.scrollHeight;
+    }
+  </script>
+</body>
+</html>
