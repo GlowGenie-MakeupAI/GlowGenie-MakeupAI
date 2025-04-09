@@ -1,92 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>GlowGenie - AI Stylist</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GlowGenie AI Stylist Chat</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Open+Sans&display=swap" rel="stylesheet">
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: linear-gradient(to right, #fff0f5, #ffe6fa);
+      color: #4a004d;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
     .chat-container {
-      max-width: 600px;
-      margin: 40px auto;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      padding: 20px;
       background: #fff;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 600px;
+      border-radius: 20px;
+      padding: 1.5rem;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      height: 70vh;
     }
-    .chat-log {
-      height: 300px;
+
+    .messages {
+      flex: 1;
       overflow-y: auto;
-      margin-bottom: 10px;
-      border: 1px solid #eee;
-      padding: 10px;
+      margin-bottom: 1rem;
+      padding-right: 10px;
     }
-    .user, .bot {
-      margin: 5px 0;
+
+    .msg {
+      margin: 10px 0;
+      max-width: 80%;
+      padding: 0.8rem 1rem;
+      border-radius: 15px;
+      font-size: 0.95rem;
+      line-height: 1.4;
     }
-    .bot { color: #b23eff; }
-    input[type=\"text\"] {
-      width: 80%;
-      padding: 10px;
+
+    .bot {
+      background-color: #ffe6fa;
+      align-self: flex-start;
     }
+
+    .user {
+      background-color: #ffb3da;
+      align-self: flex-end;
+      color: #fff;
+    }
+
+    .input-area {
+      display: flex;
+      gap: 10px;
+    }
+
+    input {
+      flex: 1;
+      padding: 0.8rem;
+      border-radius: 30px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
     button {
-      padding: 10px 15px;
-      background: #b23eff;
+      background-color: #ff66b2;
       color: white;
       border: none;
+      border-radius: 30px;
+      padding: 0.8rem 1.2rem;
+      font-size: 1rem;
       cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #cc005f;
+    }
+
+    .back-link {
+      margin-top: 1rem;
+      text-decoration: none;
+      font-weight: bold;
+      color: #e60073;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>GlowGenie</h1>
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="chatbot.html">AI Stylist</a></li>
-        <li><a href="lookbook.html">Lookbook</a></li>
-        <li><a href="store.html">Store</a></li>
-        <li><a href="customizer.html">Customizer</a></li>
-        <li><a href="about.html">About</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <main class="chat-container">
-    <div class="chat-log" id="chat-log">
-      <div class="bot">Hello! I'm your GlowGenie Stylist 🌟 Let's get you glowing!</div>
+  <h1>💬 Chat with GlowGenie</h1>
+  <div class="chat-container">
+    <div class="messages" id="messages">
+      <div class="msg bot">Hi there! 👋 I'm your AI stylist. How can I help you today?</div>
+      <div class="msg user">Suggest a lipstick shade for a dinner date?</div>
+      <div class="msg bot">For a romantic dinner, try a rose matte or soft red shade. Want product suggestions?</div>
     </div>
-    <input type="text" id="user-input" placeholder="Type your style or occasion..." />
-    <button onclick="sendMessage()">Send</button>
-  </main>
+    <div class="input-area">
+      <input type="text" id="userInput" placeholder="Type your question..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+  <a href="index.html" class="back-link">← Back to Home</a>
 
   <script>
     function sendMessage() {
-      const input = document.getElementById('user-input');
-      const log = document.getElementById('chat-log');
+      const input = document.getElementById("userInput");
+      const msg = input.value.trim();
+      if (msg === "") return;
 
-      const userMsg = document.createElement('div');
-      userMsg.classList.add('user');
-      userMsg.innerText = 'You: ' + input.value;
-      log.appendChild(userMsg);
+      const messages = document.getElementById("messages");
 
-      const botMsg = document.createElement('div');
-      botMsg.classList.add('bot');
+      // User message
+      const userDiv = document.createElement("div");
+      userDiv.className = "msg user";
+      userDiv.innerText = msg;
+      messages.appendChild(userDiv);
 
-      // Very basic fake AI logic
-      if (input.value.toLowerCase().includes('party')) {
-        botMsg.innerText = 'Try a bold lip and shimmer eyeshadow! 💃';
-      } else if (input.value.toLowerCase().includes('natural')) {
-        botMsg.innerText = 'Go for nude tones and light mascara ✨';
-      } else {
-        botMsg.innerText = 'I recommend a fresh dewy base with soft pink tones 💖';
-      }
+      // Mock bot response
+      const botDiv = document.createElement("div");
+      botDiv.className = "msg bot";
+      botDiv.innerText = "✨ Styling in progress... (AI reply coming soon)";
+      messages.appendChild(botDiv);
 
-      log.appendChild(botMsg);
-      input.value = '';
-      log.scrollTop = log.scrollHeight;
+      input.value = "";
+      messages.scrollTop = messages.scrollHeight;
     }
   </script>
 </body>
