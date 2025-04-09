@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GlowGenie - AI Makeup Assistant</title>
   <link rel="icon" href="https://fav.farm/💄" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Open+Sans&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -13,27 +14,38 @@
     }
 
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to right, #ffe0ec, #ffe6fa);
+      font-family: 'Open Sans', sans-serif;
+      background: linear-gradient(to right, #fff0f5, #ffe6fa);
       color: #4a004d;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
       text-align: center;
-      height: 100vh;
       padding: 2rem;
     }
 
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 1rem;
+    header {
+      padding: 2rem 0;
     }
 
-    p {
-      font-size: 1.3rem;
-      max-width: 600px;
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    p.lead {
+      font-size: 1.25rem;
+      color: #6b006b;
       margin-bottom: 2rem;
+    }
+
+    nav {
+      margin-bottom: 2rem;
+    }
+
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: #e60073;
+      font-weight: bold;
     }
 
     .btn {
@@ -41,29 +53,119 @@
       color: white;
       padding: 0.8rem 1.5rem;
       border: none;
-      border-radius: 50px;
+      border-radius: 30px;
       font-size: 1rem;
       cursor: pointer;
+      margin: 1rem;
       transition: background-color 0.3s ease;
     }
 
     .btn:hover {
-      background-color: #e60073;
+      background-color: #cc005f;
+    }
+
+    section {
+      margin: 3rem 0;
+    }
+
+    .features, .models, .store {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      padding: 1.5rem;
+      max-width: 300px;
+      text-align: left;
+    }
+
+    .card img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin-bottom: 1rem;
     }
 
     footer {
-      position: absolute;
-      bottom: 10px;
-      font-size: 0.8rem;
+      margin-top: 4rem;
+      font-size: 0.9rem;
       color: #888;
     }
   </style>
 </head>
 <body>
-  <h1>✨ Welcome to GlowGenie</h1>
-  <p>Your personal AI makeup & styling assistant, crafted to help you glow smarter and brighter every day.</p>
-  <button class="btn">Get Started</button>
+  <header>
+    <h1>✨ GlowGenie</h1>
+    <p class="lead">Your personal AI makeup & styling assistant.</p>
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#models">Lookbook</a>
+      <a href="#store">Store</a>
+      <a href="#customize">Customize</a>
+    </nav>
+    <button class="btn">Get Started</button>
+  </header>
 
-  <footer>&copy; 2025 GlowGenie Inc.</footer>
+  <section id="features">
+    <h2>Features</h2>
+    <div class="features">
+      <div class="card">
+        <h3>Upload & Preview</h3>
+        <p>Upload your full-body and face pictures to preview different makeup looks.</p>
+      </div>
+      <div class="card">
+        <h3>Smart Suggestions</h3>
+        <p>AI analyzes your wardrobe and face to give look combinations and beauty tips.</p>
+      </div>
+      <div class="card">
+        <h3>Try Before You Buy</h3>
+        <p>Don’t have a product? Try it virtually and buy directly from the GlowGenie store.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="models">
+    <h2>Lookbook</h2>
+    <div class="models">
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=300&q=80" alt="Model 1">
+        <h3>Natural Glow</h3>
+        <p>Perfect for everyday elegance and minimalism.</p>
+      </div>
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?auto=format&fit=crop&w=300&q=80" alt="Model 2">
+        <h3>Party Queen</h3>
+        <p>Vibrant shades and sparkle for special nights.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="store">
+    <h2>GlowGenie Store</h2>
+    <div class="store">
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1585238342029-58a59b17f092?auto=format&fit=crop&w=300&q=80" alt="Lipstick">
+        <h3>Rose Matte Lipstick</h3>
+        <p>$14.99 - Add to Cart</p>
+      </div>
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1586244431849-978c7cb1b6b9?auto=format&fit=crop&w=300&q=80" alt="Eyeshadow">
+        <h3>Sunset Eyeshadow</h3>
+        <p>$24.99 - Add to Cart</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="customize">
+    <h2>Customize Your Look</h2>
+    <p>Coming soon: Upload your pictures to create your perfect look with AI recommendations.</p>
+    <button class="btn">Join Waitlist</button>
+  </section>
+
+  <footer>&copy; 2025 GlowGenie Inc. | All rights reserved</footer>
 </body>
 </html>
