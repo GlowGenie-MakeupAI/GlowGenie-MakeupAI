@@ -1,81 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GlowGenie AI Stylist Chat</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Open+Sans&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GlowGenie Chatbot</title>
   <style>
-    * {
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to right, #ffe6f0, #fff5f9);
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Open Sans', sans-serif;
-      background: linear-gradient(to right, #fff0f5, #ffe6fa);
-      color: #4a004d;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      padding: 2rem;
+      height: 100vh;
     }
 
-    h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
+    header {
+      background-color: #ff80aa;
+      color: white;
+      text-align: center;
+      padding: 1.5rem 1rem;
+      font-size: 1.5rem;
     }
 
     .chat-container {
-      background: #fff;
-      width: 90%;
-      max-width: 600px;
-      border-radius: 20px;
-      padding: 1.5rem;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      flex: 1;
+      padding: 1rem;
       display: flex;
       flex-direction: column;
-      height: 70vh;
-    }
-
-    .messages {
-      flex: 1;
       overflow-y: auto;
-      margin-bottom: 1rem;
-      padding-right: 10px;
     }
 
-    .msg {
-      margin: 10px 0;
-      max-width: 80%;
-      padding: 0.8rem 1rem;
+    .chat-bubble {
+      background-color: #f9f1f8;
       border-radius: 15px;
-      font-size: 0.95rem;
+      padding: 10px 15px;
+      margin: 10px;
+      max-width: 70%;
       line-height: 1.4;
     }
 
-    .bot {
-      background-color: #ffe6fa;
-      align-self: flex-start;
+    .user {
+      background-color: #ffd6e8;
+      align-self: flex-end;
     }
 
-    .user {
-      background-color: #ffb3da;
-      align-self: flex-end;
-      color: #fff;
+    .bot {
+      background-color: #e6f2ff;
+      align-self: flex-start;
     }
 
     .input-area {
       display: flex;
-      gap: 10px;
+      padding: 1rem;
+      border-top: 1px solid #ddd;
+      background: #fff0f7;
     }
 
     input {
       flex: 1;
       padding: 0.8rem;
-      border-radius: 30px;
+      border-radius: 20px;
       border: 1px solid #ccc;
       font-size: 1rem;
     }
@@ -84,63 +69,73 @@
       background-color: #ff66b2;
       color: white;
       border: none;
-      border-radius: 30px;
       padding: 0.8rem 1.2rem;
-      font-size: 1rem;
+      border-radius: 20px;
+      margin-left: 10px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      font-weight: bold;
     }
 
     button:hover {
       background-color: #cc005f;
     }
-
-    .back-link {
-      margin-top: 1rem;
-      text-decoration: none;
-      font-weight: bold;
-      color: #e60073;
-    }
   </style>
 </head>
 <body>
-  <h1>💬 Chat with GlowGenie</h1>
-  <div class="chat-container">
-    <div class="messages" id="messages">
-      <div class="msg bot">Hi there! 👋 I'm your AI stylist. How can I help you today?</div>
-      <div class="msg user">Suggest a lipstick shade for a dinner date?</div>
-      <div class="msg bot">For a romantic dinner, try a rose matte or soft red shade. Want product suggestions?</div>
-    </div>
-    <div class="input-area">
-      <input type="text" id="userInput" placeholder="Type your question..." />
-      <button onclick="sendMessage()">Send</button>
-    </div>
+
+  <header>💄 GlowGenie AI Chat</header>
+
+  <div class="chat-container" id="chatContainer">
+    <div class="chat-bubble bot">Hi! I'm your GlowGenie AI. Ask me anything about makeup, skincare, or style! 💅</div>
   </div>
-  <a href="index.html" class="back-link">← Back to Home</a>
+
+  <div class="input-area">
+    <input type="text" id="userInput" placeholder="Ask your style or beauty question...">
+    <button onclick="sendMessage()">Send</button>
+  </div>
 
   <script>
-    function sendMessage() {
-      const input = document.getElementById("userInput");
-      const msg = input.value.trim();
-      if (msg === "") return;
+    const chatContainer = document.getElementById("chatContainer");
+    const userInput = document.getElementById("userInput");
 
-      const messages = document.getElementById("messages");
+    async function sendMessage() {
+      const message = userInput.value.trim();
+      if (!message) return;
 
-      // User message
-      const userDiv = document.createElement("div");
-      userDiv.className = "msg user";
-      userDiv.innerText = msg;
-      messages.appendChild(userDiv);
+      // Append user message
+      appendMessage(message, 'user');
+      userInput.value = "";
 
-      // Mock bot response
-      const botDiv = document.createElement("div");
-      botDiv.className = "msg bot";
-      botDiv.innerText = "✨ Styling in progress... (AI reply coming soon)";
-      messages.appendChild(botDiv);
+      // Call OpenAI API
+      try {
+        const response = await fetch("https://api.openai.com/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer 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" // 🔥 Replace this line with your API key
+          },
+          body: JSON.stringify({
+            model: "gpt-3.5-turbo",
+            messages: [{ role: "user", content: message }]
+          })
+        });
 
-      input.value = "";
-      messages.scrollTop = messages.scrollHeight;
+        const data = await response.json();
+        const botReply = data.choices?.[0]?.message?.content || "Oops! Something went wrong.";
+        appendMessage(botReply, 'bot');
+      } catch (error) {
+        appendMessage("Error reaching GlowGenie AI. Please try again later.", 'bot');
+      }
+    }
+
+    function appendMessage(text, type) {
+      const bubble = document.createElement("div");
+      bubble.className = `chat-bubble ${type}`;
+      bubble.innerText = text;
+      chatContainer.appendChild(bubble);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
     }
   </script>
+
 </body>
 </html>
